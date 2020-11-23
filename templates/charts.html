@@ -1,5 +1,54 @@
 	{% extends 'base.html' %}
 
 	{% block content %}
-<h2>Hello world</h2>
-	{% endblock content%}
+	    <style>
+
+    </style>
+    <div class="container">
+<canvas id="myChart"></canvas>
+</div>
+<script>
+	let url = document.location.href.replace('charts', 'get');
+	
+	fetch(url)
+    .then(response => response.json())
+    .then(json=>{
+
+    		let date = []
+    		let buy = []
+    		let sell = []
+    		for (var i = json.length - 1; i >= 0; i--) {
+    			date.push(json[i].date)
+    			buy.push(json[i].buy_usd)
+    			sell.push(json[i].sell_usd)
+    		}
+var buyData = {
+  label: "Покупка",
+  data: buy,
+    borderColor: 'black',
+  fill: false,
+};
+   
+var sellData = {
+  label: "Продажа",
+  data: sell,
+    borderColor: 'orange',
+  fill: false,
+};
+   
+var currData = {
+  labels: date,
+  datasets: [buyData, sellData]
+};
+ 
+ 
+var ctx = document.getElementById('myChart').getContext('2d');
+			var myChart = new Chart(ctx, {
+  type: 'line',
+  data: currData,
+
+});
+    })
+ 
+</script>
+	{% endblock content %}

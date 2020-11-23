@@ -19,7 +19,7 @@ def close_db(r):
 
 @app.route('/',  methods=('GET', 'POST'))
 def show():
-	cursor = g.db.execute("select * from currency order by id desc")
+	cursor = g.db.execute("select * from currency order by date desc")
 	values = cursor.fetchall()
 	return render_template('index.html', values=values)
 
@@ -60,3 +60,12 @@ def charts():
 	cursor = g.db.execute("select * from currency")
 	values = cursor.fetchall()
 	return render_template('charts.html', values=values)
+
+
+@app.route("/get/", methods=['GET'])
+def get_all():
+    cursor = g.db.execute("select id, date, buy_usd, sell_usd from currency order by date desc")
+    values = cursor.fetchall()
+    values = [{"id": id_, "date": date, "buy_usd": buy, "sell_usd": sell}
+        for id_, date, buy, sell in values]
+    return jsonify(values)
