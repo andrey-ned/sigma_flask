@@ -1,2 +1,6 @@
 flake8==3.8.4
 Flask==1.1.2
+Flask-Script==2.0.6
+pytest==6.1.2
+pytest-flask==1.1.0
+
