@@ -9,3 +9,4 @@
 	date text,
 	buy_usd real,
 	sell_usd real); `
+* Have some problems with Pytest-flask
